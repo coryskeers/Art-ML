@@ -73,14 +73,27 @@ def subtraction(im1, im2):
     diffIm = Image.fromarray(buff3)
     return diffIm
 
-def channelMeans(im):
-    bands = Image.Image.split(im)
-    gray = im.convert('L')
+def channelMeans(im, normalize = False, alterOriginal = False):
+    ''' Returns channel means/variance (including a grayscale channel).
+    if "normalize", then returns (means/variance, normalizedBands).
+    If normalized, the individual bands can be returned, or the
+    original image altered and returned.'''
+    split = Image.Image.split(im)
+    bands = [band.histogram() for band in split]
+    gray = im.convert('L').histogram()
     d = []
     for i in range(len(bands)):
-        d.append(meanAndvar(normalizeHisto(bands[i].histogram())))
-    d.append(meanAndvar(normalizeHisto(gray.histogram())))
-    return d
+        d.append(meanAndvar(normalizeHisto(bands[i])))
+    d.append(gray)
+    if not normalize:
+        return d
+    for i in range(len(bands)):
+        for j in range(len(bands[i])):
+            bands[i][j] = (bands[i][j] - d[i][0]) / d[i][1]
+    if not alterOriginal:
+        return (d, bands)
+    
+            
 
 def normalizePixels(im):
     pixels = list(im.getdata())
