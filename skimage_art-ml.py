@@ -1,7 +1,10 @@
 #scikit-image
 import numpy as np
 import os
+import matplotlib.pyplot as plt
+
 from skimage import data, io, img_as_float, filters
+from skimage.color import rgb2gray
 
 '''attributes
 .shape
@@ -47,19 +50,23 @@ class Image:
     def __init__(self, filepath):
         self.filepath = filepath
         self.filename = ''
-        self.image = self.open(self.filepath)
+        self.open()
         self.globalMean = -1
         self.localMean = -1
         self.globalVar = -1
         self.localVar = -1
+        self.normalized = -1
+        self.edges = -1
+        self.inverted = -1
+        self.hflip = -1
 
-    def open(self, filepath):
-        if '/' in filepath:
-            self.filename = filepath.split('/')[-1]
+    def open(self):
+        if '/' in self.filepath:
+            self.filename = self.filepath.split('/')[-1]
         else:
-            self.filename = filepath
+            self.filename = self.filepath
         try:
-            im = io.imread(filepath)
+            im = io.imread(self.filepath)
             self.image = im
         except:
             self.image = -1
@@ -93,7 +100,7 @@ class Image:
                 if self.globalMean == -1:
                     self.mean(local = False)
                 squares = np.sum((self.image - self.globalMean)**2)
-                self.globalVar = squares / (self.image.shape[0] * self.image.shape[1])
+                self.globalVar = squares / ((self.image.shape[0] * self.image.shape[1]) - 1)
             return self.globalVar
         if self.localVar == -1:
             chvars = []
@@ -101,11 +108,13 @@ class Image:
                 self.mean(local = True)
             for ch in range(len(self.image[0][0])):
                 squares = np.sum((self.image[:,:,ch] - self.localMean[ch])**2)
-                chvars.append(squares / (self.image.shape[0] * self.image.shape[1]))
+                chvars.append(squares / ((self.image.shape[0] * self.image.shape[1])) - 1)
             self.localVar = chvars
             return self.localVar
 
     def normalize(self, local = False, mean = -255, var = -255):
+        if type(self.normalized) != int:
+            return self.normalized
         if not local:
             if mean == -255:
                 mean = self.globalMean
@@ -118,7 +127,30 @@ class Image:
             if type(var) == int:
                 var = self.localVar
             chnorms = []
-            for ch in range(len(self.image[0][0])):
+            for ch in range(self.image.shape[2]):
                 chnorms.append((self.image[:,:,ch] - mean[ch]) / (var[ch]**(1/2)))
-            self.normalized = numpy.array(chnorms)
+            self.normalized = np.array(chnorms)
         return self.normalized
+
+    def edgeDetect(self):
+        if type(self.edges) == int:
+            self.edges = filters.sobel(rgb2gray(self.image))
+        return self.edges
+
+    def invert(self):
+        if type(self.inverted) == int:
+            self.inverted = 255 - self.image
+        return self.inverted
+
+    def flip(self):
+        if type(self.hflip) == int:
+            self.hflip = np.copy(self.image)
+            for i in range(self.image.shape[1]):
+                self.hflip[:,i,:] = self.image[:,-i - 1,:]
+        return self.hflip
+    
+    def show(self, image = -255):
+        if type(image) == int:
+            image = self.image
+        io.imshow(image)
+        io.show()
