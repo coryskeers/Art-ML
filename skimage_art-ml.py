@@ -132,14 +132,20 @@ class Image:
             self.normalized = np.array(chnorms)
         return self.normalized
 
-    def edgeDetect(self):
+    def edgeDetect(self, sharpIndex = False):
         if type(self.edges) == int:
             self.edges = filters.sobel(rgb2gray(self.image))
+        if sharpIndex:
+            # Higher index suggests higher rate of sharp edges
+            return np.mean(self.edges)
         return self.edges
 
-    def invert(self):
+    def invert(self, symmetryIndex = False):
         if type(self.inverted) == int:
             self.inverted = 255 - self.image
+        if symmetryIndex:
+            # Higher index suggests higher rate of horizontal symmetry
+            return np.mean(self.inverted + self.hflip)
         return self.inverted
 
     def flip(self):
