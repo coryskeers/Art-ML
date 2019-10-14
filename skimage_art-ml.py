@@ -59,6 +59,8 @@ class Image:
         self.edges = -1
         self.inverted = -1
         self.hflip = -1
+        self.grayHistogram = -1
+        self.histogram = -1
 
     def open(self):
         if '/' in self.filepath:
@@ -111,6 +113,27 @@ class Image:
                 chvars.append(squares / ((self.image.shape[0] * self.image.shape[1])) - 1)
             self.localVar = chvars
             return self.localVar
+    
+    def histogram(self, gray = False):
+        if type(self.image) == int:
+            print("Image has not been opened.")
+        if gray:
+            if type(self.grayHistogram) == int:
+                pixels = rgb2gray(self.image).flatten()
+                self.grayHistogram = [0] * 256;
+                for pixel in pixels:
+                    self.grayHistogram[pixel] += 1
+            return self.grayHistogram
+        if type(self.histogram) == int:
+            chhistos = []
+            for ch in range(len(self.image[0][0])):
+                histo = [0] * 256
+                pixels = self.image[:,:,ch].flatten()
+                for pixel in pixels:
+                    histo[pixel] += 1
+                chhistos.append(histo)
+            self.histogram = chhistos
+        return self.histogram
 
     def normalize(self, local = False, mean = -255, var = -255):
         if type(self.normalized) != int:
