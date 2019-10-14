@@ -173,7 +173,7 @@ class Image:
 
     def flip(self):
         if type(self.hflip) == int:
-            self.hflip = np.copy(self.image)
+            self.hflip = np.zeros(self.image.shape)
             for i in range(self.image.shape[1]):
                 self.hflip[:,i,:] = self.image[:,-i - 1,:]
         return self.hflip
