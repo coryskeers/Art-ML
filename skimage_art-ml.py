@@ -114,7 +114,7 @@ class Image:
             self.localVar = chvars
             return self.localVar
     
-    def histogram(self, gray = False):
+    def histograms(self, gray = False):
         if type(self.image) == int:
             print("Image has not been opened.")
         if gray:
@@ -168,12 +168,13 @@ class Image:
             self.inverted = 255 - self.image
         if symmetryIndex:
             # Higher index suggests higher rate of horizontal symmetry
-            return np.mean(self.inverted + self.hflip)
+            # 1.0 would indicate perfect symmetry
+            return (np.mean(self.inverted + self.flip()) + 1)/256
         return self.inverted
 
     def flip(self):
         if type(self.hflip) == int:
-            self.hflip = np.zeros(self.image.shape)
+            self.hflip = np.copy(self.image)
             for i in range(self.image.shape[1]):
                 self.hflip[:,i,:] = self.image[:,-i - 1,:]
         return self.hflip
