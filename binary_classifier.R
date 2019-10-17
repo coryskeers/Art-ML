@@ -1,5 +1,5 @@
 # file input
-file1 <- "/Users/cskeers/Documents/pil/warhol.txt"
+file1 <- "/Users/cskeers/Documents/pil/picasso.txt"
 file2 <- "/Users/cskeers/Documents/pil/warhol.txt"
 artist_data1 <- read.table(file1, header=FALSE, sep=",", fill=TRUE)
 artist_data2 <- read.table(file2, header=FALSE, sep=",", fill=TRUE)
@@ -15,6 +15,7 @@ artist_data2[,11] = category2
 # create full dataset
 df <- rbind(artist_data1, artist_data2)
 
+
 # create train/test indices
 num_rows = dim(df)[1]
 num_train = as.integer(num_rows * 0.75)
@@ -24,12 +25,11 @@ num_train
 test_index = setdiff(1:num_rows, train_index)
 y_train = df[train_index,11]
 y_test = df[test_index,11]
-x_train = df[train_index,-11]
-x_test = df[test_index,-11]
+x_train = scale(df[train_index,-11])
+x_test = scale(df[test_index,-11])
 
 train = cbind.data.frame(y = y_train, x = x_train)
 test = cbind.data.frame(y = y_test, x = x_test)
-
 
 # create and test model
 model = glm(y ~ ., data = train, family = "binomial")
