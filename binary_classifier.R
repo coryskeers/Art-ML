@@ -1,6 +1,6 @@
 # file input
 file1 <- "/Users/cskeers/Documents/pil/warhol.txt"
-file2 <- "/Users/cskeers/Documents/pil/titian.txt"
+file2 <- "/Users/cskeers/Documents/pil/warhol.txt"
 artist_data1 <- read.table(file1, header=FALSE, sep=",", fill=TRUE)
 artist_data2 <- read.table(file2, header=FALSE, sep=",", fill=TRUE)
 
@@ -17,7 +17,10 @@ df <- rbind(artist_data1, artist_data2)
 
 # create train/test indices
 num_rows = dim(df)[1]
-train_index = sample(1:num_rows, (num_rows %/% 4 * 3), replace = FALSE)
+num_train = as.integer(num_rows * 0.75)
+train_index = sample(1:num_rows, num_train, replace = FALSE)
+num_rows
+num_train
 test_index = setdiff(1:num_rows, train_index)
 y_train = df[train_index,11]
 y_test = df[test_index,11]
