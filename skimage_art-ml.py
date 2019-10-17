@@ -33,10 +33,23 @@ class Runner:
             d = [filename]
             im = Image(self.ind.directory + filename)
             d.append(im.mean())
+            lm = im.mean(True)
+            for i in range(3):
+                if type(lm) == list and len(lm) - 1 >= i:
+                    d.append(lm[i])
+                else:
+                    d.append(0)
             d.append(im.var())
+            lv = im.var(True)
+            for i in range(3):
+                if type(lv) == list and len(lv) - 1 >= i:
+                    d.append(lv[i])
+                else:
+                    d.append(0)            
             d.append(im.edgeDetect(True))
             d.append(im.invert(True))
             self.artistData.append(d)
+        self.write(artist + '.txt', self.artistData)
 
     def analyzeTitian(self):
         self.titianData = []
@@ -126,9 +139,9 @@ class Image:
             if self.globalMean == -1:
                 self.globalMean = np.mean(self.image)
             return self.globalMean
-        if self.localMean == -1:
+        if self.localMean == -1 and len(self.image.shape) > 2:
             chmeans = []
-            for ch in range(len(self.image[0][0])):
+            for ch in range(self.image.shape[2]):
                 chmeans.append(self.image[:,:,ch].mean())
             self.localMean = chmeans
         return self.localMean
@@ -143,11 +156,11 @@ class Image:
                 squares = np.sum((self.image - self.globalMean)**2)
                 self.globalVar = squares / ((self.image.shape[0] * self.image.shape[1]) - 1)
             return self.globalVar
-        if self.localVar == -1:
+        if self.localVar == -1 and len(self.image.shape) > 2:
             chvars = []
             if self.localMean == -1:
                 self.mean(local = True)
-            for ch in range(len(self.image[0][0])):
+            for ch in range(self.image.shape[2]):
                 squares = np.sum((self.image[:,:,ch] - self.localMean[ch])**2)
                 chvars.append(squares / ((self.image.shape[0] * self.image.shape[1])) - 1)
             self.localVar = chvars
@@ -208,7 +221,7 @@ class Image:
         if symmetryIndex:
             # Higher index suggests higher rate of horizontal symmetry
             # 1.0 would indicate perfect symmetry
-            return (np.mean(self.inverted + self.flip()) + 1)/256
+            return (np.mean(rgb2gray(self.inverted) + rgb2gray(self.flip())) + 1)/256
         return self.inverted
 
     def flip(self):
