@@ -1,0 +1,200 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1504\cocoasubrtf840
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\margl1440\margr1440\vieww22040\viewh18240\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 > mfile <- "/Users/cskeers/Documents/pil/monet.txt"\
+> mfile\
+[1] "/Users/cskeers/Documents/pil/monet.txt"\
+> monetdf <- read.table(mfile, header=FALSE, sep=",", fill=TRUE)\
+> summary(monetdf)\
+                   V1           V2               V3              V4                V5        \
+ Claude_Monet_1.jpg : 1   Min.   : 86.69   Min.   : 1442   Min.   :0.02006   Min.   :0.5021  \
+ Claude_Monet_10.jpg: 1   1st Qu.:126.37   1st Qu.: 6168   1st Qu.:0.04746   1st Qu.:0.5039  \
+ Claude_Monet_11.jpg: 1   Median :138.91   Median : 7908   Median :0.05470   Median :0.5052  \
+ Claude_Monet_12.jpg: 1   Mean   :139.53   Mean   : 8053   Mean   :0.05783   Mean   :0.5056  \
+ Claude_Monet_13.jpg: 1   3rd Qu.:156.14   3rd Qu.: 9700   3rd Qu.:0.06711   3rd Qu.:0.5063  \
+ Claude_Monet_14.jpg: 1   Max.   :203.70   Max.   :14665   Max.   :0.13500   Max.   :0.5184  \
+ (Other)            :67                                                                      \
+    V6         \
+ Mode:logical  \
+ NA's:73       \
+               \
+               \
+               \
+               \
+               \
+> mfile <- "/Users/cskeers/Documents/pil/titian.txt"\
+> titiandf <- read.table(tfile, header=FALSE, sep=",", fill=TRUE)\
+Error in read.table(tfile, header = FALSE, sep = ",", fill = TRUE) : \
+  object 'tfile' not found\
+> tfile <- "/Users/cskeers/Documents/pil/titian.txt"\
+> titiandf <- read.table(tfile, header=FALSE, sep=",", fill=TRUE)\
+> summary(monetdf)\
+                   V1           V2               V3              V4                V5        \
+ Claude_Monet_1.jpg : 1   Min.   : 86.69   Min.   : 1442   Min.   :0.02006   Min.   :0.5021  \
+ Claude_Monet_10.jpg: 1   1st Qu.:126.37   1st Qu.: 6168   1st Qu.:0.04746   1st Qu.:0.5039  \
+ Claude_Monet_11.jpg: 1   Median :138.91   Median : 7908   Median :0.05470   Median :0.5052  \
+ Claude_Monet_12.jpg: 1   Mean   :139.53   Mean   : 8053   Mean   :0.05783   Mean   :0.5056  \
+ Claude_Monet_13.jpg: 1   3rd Qu.:156.14   3rd Qu.: 9700   3rd Qu.:0.06711   3rd Qu.:0.5063  \
+ Claude_Monet_14.jpg: 1   Max.   :203.70   Max.   :14665   Max.   :0.13500   Max.   :0.5184  \
+ (Other)            :67                                                                      \
+    V6         \
+ Mode:logical  \
+ NA's:73       \
+               \
+               \
+               \
+               \
+               \
+> summary(titiandf)\
+              V1            V2               V3                V4                V5        \
+ Titian_1.jpg  :  1   Min.   : 23.08   Min.   :  946.2   Min.   :0.01243   Min.   :0.5024  \
+ Titian_10.jpg :  1   1st Qu.: 55.36   1st Qu.: 5889.5   1st Qu.:0.02650   1st Qu.:0.5051  \
+ Titian_100.jpg:  1   Median : 69.07   Median : 8453.3   Median :0.03389   Median :0.5067  \
+ Titian_101.jpg:  1   Mean   : 70.39   Mean   : 8554.6   Mean   :0.03551   Mean   :0.5094  \
+ Titian_102.jpg:  1   3rd Qu.: 85.24   3rd Qu.:10568.4   3rd Qu.:0.04181   3rd Qu.:0.5101  \
+ Titian_103.jpg:  1   Max.   :119.72   Max.   :22013.8   Max.   :0.08611   Max.   :0.5703  \
+ (Other)       :143                                                                        \
+    V6         \
+ Mode:logical  \
+ NA's:149      \
+               \
+               \
+               \
+               \
+               \
+> monet = monetdf[,-1]\
+> summary(monet)\
+       V2               V3              V4                V5            V6         \
+ Min.   : 86.69   Min.   : 1442   Min.   :0.02006   Min.   :0.5021   Mode:logical  \
+ 1st Qu.:126.37   1st Qu.: 6168   1st Qu.:0.04746   1st Qu.:0.5039   NA's:73       \
+ Median :138.91   Median : 7908   Median :0.05470   Median :0.5052                 \
+ Mean   :139.53   Mean   : 8053   Mean   :0.05783   Mean   :0.5056                 \
+ 3rd Qu.:156.14   3rd Qu.: 9700   3rd Qu.:0.06711   3rd Qu.:0.5063                 \
+ Max.   :203.70   Max.   :14665   Max.   :0.13500   Max.   :0.5184                 \
+> monet = monetdf[,:4]\
+Error: unexpected ':' in "monet = monetdf[,:"\
+> monet = monetdf[,-5]\
+> summary(monet)\
+                   V1           V2               V3              V4             V6         \
+ Claude_Monet_1.jpg : 1   Min.   : 86.69   Min.   : 1442   Min.   :0.02006   Mode:logical  \
+ Claude_Monet_10.jpg: 1   1st Qu.:126.37   1st Qu.: 6168   1st Qu.:0.04746   NA's:73       \
+ Claude_Monet_11.jpg: 1   Median :138.91   Median : 7908   Median :0.05470                 \
+ Claude_Monet_12.jpg: 1   Mean   :139.53   Mean   : 8053   Mean   :0.05783                 \
+ Claude_Monet_13.jpg: 1   3rd Qu.:156.14   3rd Qu.: 9700   3rd Qu.:0.06711                 \
+ Claude_Monet_14.jpg: 1   Max.   :203.70   Max.   :14665   Max.   :0.13500                 \
+ (Other)            :67                                                                    \
+> monet=monetdf[,c(-1, -6)]\
+> summary(monet)\
+       V2               V3              V4                V5        \
+ Min.   : 86.69   Min.   : 1442   Min.   :0.02006   Min.   :0.5021  \
+ 1st Qu.:126.37   1st Qu.: 6168   1st Qu.:0.04746   1st Qu.:0.5039  \
+ Median :138.91   Median : 7908   Median :0.05470   Median :0.5052  \
+ Mean   :139.53   Mean   : 8053   Mean   :0.05783   Mean   :0.5056  \
+ 3rd Qu.:156.14   3rd Qu.: 9700   3rd Qu.:0.06711   3rd Qu.:0.5063  \
+ Max.   :203.70   Max.   :14665   Max.   :0.13500   Max.   :0.5184  \
+> monet[,5] = 0\
+> summary(monet)\
+       V2               V3              V4                V5              V5.1  \
+ Min.   : 86.69   Min.   : 1442   Min.   :0.02006   Min.   :0.5021   Min.   :0  \
+ 1st Qu.:126.37   1st Qu.: 6168   1st Qu.:0.04746   1st Qu.:0.5039   1st Qu.:0  \
+ Median :138.91   Median : 7908   Median :0.05470   Median :0.5052   Median :0  \
+ Mean   :139.53   Mean   : 8053   Mean   :0.05783   Mean   :0.5056   Mean   :0  \
+ 3rd Qu.:156.14   3rd Qu.: 9700   3rd Qu.:0.06711   3rd Qu.:0.5063   3rd Qu.:0  \
+ Max.   :203.70   Max.   :14665   Max.   :0.13500   Max.   :0.5184   Max.   :0  \
+> titian = titiandf[,c(-1,-6)]\
+> titian[,5] = 1\
+> summary(titian)\
+       V2               V3                V4                V5              V5.1  \
+ Min.   : 23.08   Min.   :  946.2   Min.   :0.01243   Min.   :0.5024   Min.   :1  \
+ 1st Qu.: 55.36   1st Qu.: 5889.5   1st Qu.:0.02650   1st Qu.:0.5051   1st Qu.:1  \
+ Median : 69.07   Median : 8453.3   Median :0.03389   Median :0.5067   Median :1  \
+ Mean   : 70.39   Mean   : 8554.6   Mean   :0.03551   Mean   :0.5094   Mean   :1  \
+ 3rd Qu.: 85.24   3rd Qu.:10568.4   3rd Qu.:0.04181   3rd Qu.:0.5101   3rd Qu.:1  \
+ Max.   :119.72   Max.   :22013.8   Max.   :0.08611   Max.   :0.5703   Max.   :1  \
+> df <- rbind(monet, titian)\
+> summary(df)\
+       V2               V3                V4                V5              V5.1       \
+ Min.   : 23.08   Min.   :  946.2   Min.   :0.01243   Min.   :0.5021   Min.   :0.0000  \
+ 1st Qu.: 64.73   1st Qu.: 5897.0   1st Qu.:0.03030   1st Qu.:0.5046   1st Qu.:0.0000  \
+ Median : 85.17   Median : 8252.8   Median :0.03861   Median :0.5062   Median :1.0000  \
+ Mean   : 93.13   Mean   : 8389.8   Mean   :0.04285   Mean   :0.5082   Mean   :0.6712  \
+ 3rd Qu.:123.85   3rd Qu.:10254.2   3rd Qu.:0.05228   3rd Qu.:0.5084   3rd Qu.:1.0000  \
+ Max.   :203.70   Max.   :22013.8   Max.   :0.13500   Max.   :0.5703   Max.   :1.0000  \
+> dim(df)\
+[1] 222   5\
+> train_index = sample(1:222, 160, replace = FALSE)\
+> test_index = setdiff(1:222, train_index)\
+> y_train = df[train_index,5]\
+> y_test = df[test_index,5]\
+> x_train = df[train_index,-5]\
+> x_test = df[test_index,-5]\
+> summary(y_train)\
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. \
+ 0.0000  0.0000  1.0000  0.6875  1.0000  1.0000 \
+> summary(y_test)\
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. \
+  0.000   0.000   1.000   0.629   1.000   1.000 \
+> summary(x_train)\
+       V2               V3                V4                V5        \
+ Min.   : 23.08   Min.   :  946.2   Min.   :0.01243   Min.   :0.5024  \
+ 1st Qu.: 65.12   1st Qu.: 5877.9   1st Qu.:0.03126   1st Qu.:0.5047  \
+ Median : 82.84   Median : 8252.8   Median :0.03870   Median :0.5062  \
+ Mean   : 92.45   Mean   : 8285.6   Mean   :0.04299   Mean   :0.5080  \
+ 3rd Qu.:121.90   3rd Qu.:10241.6   3rd Qu.:0.05149   3rd Qu.:0.5083  \
+ Max.   :189.91   Max.   :18409.9   Max.   :0.11037   Max.   :0.5703  \
+> summary(x_test)\
+       V2               V3              V4                V5        \
+ Min.   : 35.43   Min.   : 2069   Min.   :0.01811   Min.   :0.5021  \
+ 1st Qu.: 63.98   1st Qu.: 6226   1st Qu.:0.02666   1st Qu.:0.5043  \
+ Median : 90.02   Median : 8178   Median :0.03759   Median :0.5063  \
+ Mean   : 94.88   Mean   : 8659   Mean   :0.04251   Mean   :0.5085  \
+ 3rd Qu.:127.75   3rd Qu.:10258   3rd Qu.:0.05383   3rd Qu.:0.5092  \
+ Max.   :203.70   Max.   :22014   Max.   :0.13500   Max.   :0.5340  \
+> model = glm(y ~ ., data = train, family = "binomial")\
+Error in is.data.frame(data) : object 'train' not found\
+> train = cbind.data.frame(y = y_train, x = x_train)\
+> test = cbind.data.frame(y = y_test, x = x_test)\
+> model = glm(y ~ ., data = train, family = "binomial")\
+> summary(model)\
+\
+Call:\
+glm(formula = y ~ ., family = "binomial", data = train)\
+\
+Deviance Residuals: \
+     Min        1Q    Median        3Q       Max  \
+-2.38536  -0.01227   0.02415   0.06747   2.11920  \
+\
+Coefficients:\
+              Estimate Std. Error z value Pr(>|z|)    \
+(Intercept)  1.678e+00  1.443e+02   0.012   0.9907    \
+x.V2        -1.579e-01  3.811e-02  -4.144 3.41e-05 ***\
+x.V3         5.295e-04  2.329e-04   2.274   0.0230 *  \
+x.V4        -5.563e+01  2.966e+01  -1.875   0.0607 .  \
+x.V5         2.663e+01  2.848e+02   0.094   0.9255    \
+---\
+Signif. codes:  0 \'91***\'92 0.001 \'91**\'92 0.01 \'91*\'92 0.05 \'91.\'92 0.1 \'91 \'92 1\
+\
+(Dispersion parameter for binomial family taken to be 1)\
+\
+    Null deviance: 198.748  on 159  degrees of freedom\
+Residual deviance:  28.815  on 155  degrees of freedom\
+AIC: 38.815\
+\
+Number of Fisher Scoring iterations: 10\
+\
+> fit = as.numeric(predict(model, newdata = test) > 0.5)\
+> con = table(fit, test$y)\
+> err1 = con[1,2] + con[2,1]\
+> erate = err1 / sum(con)\
+> erate\
+[1] 0.01612903\
+> con\
+   \
+fit  0  1\
+  0 22  0\
+  1  1 39\
+> }

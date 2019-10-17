@@ -21,24 +21,22 @@ color image is array with an additional dimension for the channels.
 class Runner:
     def __init__(self):
         self.ind = Indexer()
-        self.monet = []
-        self.titian = []
-        for f in self.ind.index:
-            if 'Claude_Monet' in f:
-                self.monet.append(f)
-            elif 'Titian' in f:
-                self.titian.append(f)
 
-    def analyzeMonet(self):
-        self.monetData = []
-        for filename in self.monet:
+    def analyzeArtist(self, artist):
+        self.artist = artist
+        self.artistData = []
+        index = []
+        for f in self.ind.index:
+            if artist in f.lower():
+                index.append(f)
+        for filename in index:
             d = [filename]
             im = Image(self.ind.directory + filename)
             d.append(im.mean())
             d.append(im.var())
             d.append(im.edgeDetect(True))
             d.append(im.invert(True))
-            self.monetData.append(d)
+            self.artistData.append(d)
 
     def analyzeTitian(self):
         self.titianData = []
@@ -50,7 +48,14 @@ class Runner:
             d.append(im.edgeDetect(True))
             d.append(im.invert(True))
             self.titianData.append(d)
-            
+
+    def write(self, filename, data):
+        with open(filename, 'w') as file:
+            for line in data:
+                for d in range(len(line)):
+                    file.write(str(line[d]))
+                    file.write(",")
+                file.write("\n")
 
 class Indexer:
     '''Creates an index for use in retrieving full paths for images in the given directory.'''
@@ -210,7 +215,10 @@ class Image:
         if type(self.hflip) == int:
             self.hflip = np.copy(self.image)
             for i in range(self.image.shape[1]):
-                self.hflip[:,i,:] = self.image[:,-i - 1,:]
+                if (len(self.image.shape) > 2):
+                    self.hflip[:,i,:] = self.image[:,-i - 1,:]
+                else:
+                    self.hflip[:,i] = self.image[:,-i - 1] 
         return self.hflip
     
     def show(self, image = -255):
