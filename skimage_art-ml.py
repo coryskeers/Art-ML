@@ -18,6 +18,40 @@ image[mask] = pixel value
 color image is array with an additional dimension for the channels.
 (row, col, ch)'''
 
+class Runner:
+    def __init__(self):
+        self.ind = Indexer()
+        self.monet = []
+        self.titian = []
+        for f in self.ind.index:
+            if 'Claude_Monet' in f:
+                self.monet.append(f)
+            elif 'Titian' in f:
+                self.titian.append(f)
+
+    def analyzeMonet(self):
+        self.monetData = []
+        for filename in self.monet:
+            d = [filename]
+            im = Image(self.ind.directory + filename)
+            d.append(im.mean())
+            d.append(im.var())
+            d.append(im.edgeDetect(True))
+            d.append(im.invert(True))
+            self.monetData.append(d)
+
+    def analyzeTitian(self):
+        self.titianData = []
+        for filename in self.titian:
+            d = [filename]
+            im = Image(self.ind.directory + filename)
+            d.append(im.mean())
+            d.append(im.var())
+            d.append(im.edgeDetect(True))
+            d.append(im.invert(True))
+            self.titianData.append(d)
+            
+
 class Indexer:
     '''Creates an index for use in retrieving full paths for images in the given directory.'''
     def __init__(self, directory = "./best-artworks-of-all-time/resized/"):
